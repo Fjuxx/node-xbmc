@@ -20,13 +20,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/moul/node-xbmc"
+    "url": "git://github.com/Fjuxx/node-xbmc"
   },
   "keywords": [
     "xbmc",
     "api"
   ],
-  "author": "Manfred Touron <m@42.am>",
+  "author": "Fjuxx <Fjuxx>",
   "license": "MIT",
   "readmeFilename": "README.md"
 }
