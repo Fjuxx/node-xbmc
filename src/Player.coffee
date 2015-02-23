@@ -5,8 +5,8 @@ class Player
   @mixin: (api) ->
     debug 'mixin'
     @api = api
-    api.player = {}
-    api.player[name] = method for name, method of @
+    @api.player = {}
+    @api.player[name] = method for name, method of @
     delete api.player.mixin
 
   @open: (item, options = {}, fn = null) =>
@@ -27,7 +27,7 @@ class Player
 
   @playPause: (fn = null) =>
     debug 'playPause'
-    @getActivePlayers (data) ->
+    @getActivePlayers (data) =>
       playerId = data.result?.playerid ? data.result[0]?.playerid ? data.player?.playerid
       dfd = @api.send 'Player.PlayPause',
         playerid: playerId
@@ -37,7 +37,7 @@ class Player
 
   @stop: (fn = null) =>
     debug 'stop'
-    @getActivePlayers (data) ->
+    @getActivePlayers (data) =>
       playerId = data.result?.playerid ? data.result[0]?.playerid ? data.player?.playerid
       dfd = @api.send 'Player.Stop',
         playerid: playerId
