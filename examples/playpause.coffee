@@ -14,7 +14,9 @@ xbmcApi = new XbmcApi
   silent:     true
   connection: connection
 
-setTimeout (=> 
-  xbmcApi.player.stop -> console.log 'test'
-  console.log 'done'),3000
+xbmcApi.on 'connection:open',                     (=> 
+  xbmcApi.player.getCurrentlyPlaying  (data) -> 
+    console.log data
+    #console.log data.result.item.artist[0]
+  console.log 'done')
 

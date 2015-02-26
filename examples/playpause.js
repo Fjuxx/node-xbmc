@@ -17,13 +17,13 @@
     connection: connection
   });
 
-  setTimeout(((function(_this) {
+  xbmcApi.on('connection:open', ((function(_this) {
     return function() {
-      xbmcApi.player.stop(function() {
-        return console.log('test');
+      xbmcApi.player.getCurrentlyPlaying(function(data) {
+        return console.log(data);
       });
       return console.log('done');
     };
-  })(this)), 3000);
+  })(this)));
 
 }).call(this);
