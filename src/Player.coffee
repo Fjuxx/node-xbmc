@@ -96,22 +96,27 @@ class Player
   @getItem: (fn = null) =>
     debug 'GetItem'
     @getActivePlayers (data) =>
+      #console.log data
       playerId = data.result?.playerid ? data.result[0]?.playerid ? data.player?.playerid
-      dfd = @api.send 'Player.GetItem',
-        playerid: playerId
-        properties: ['title','artist']
-      dfd.then (data) =>
-        pubsub.emit 'player.GetItem', data
-        fn data if fn
+      if not playerId? 
+        fn null if fn
+      else
+        dfd = @api.send 'Player.GetItem',
+          playerid: playerId
+          properties: ['title','artist']
+        dfd.then (data) =>
+          pubsub.emit 'player.GetItem', data
+          fn data if fn
   @getCurrentlyPlaying: (fn = null) =>
     debug 'getCurrentlyPlaying'
     @getItem (data) =>
-      debug data
-      itm = data.result.item
-      
-      artist = itm.artist[0] ? itm.artist ? ''
-      title = itm.title ? ''
-      type = itm.type ? ''
+      #debug data
+      itm = null
+      if data? then itm = data.result?.item
+      artist = itm?.artist?[0] ? itm?.artist ? ''
+      title = itm?.title ? ''
+      type = itm?.type ? ''
+
       newData = {
         artist:artist
         title:title

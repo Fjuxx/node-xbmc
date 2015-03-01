@@ -15,6 +15,9 @@ xbmcApi = new XbmcApi
   connection: connection
 
 xbmcApi.on 'connection:open',                     (=> 
+#  xbmcApi.player.getActivePlayers (data) =>
+#    playerId = data.result?.playerid ? data.result[0]?.playerid ? data.player?.playerid
+#    console.log data
   xbmcApi.player.getCurrentlyPlaying  (data) -> 
     console.log data
     #console.log data.result.item.artist[0]

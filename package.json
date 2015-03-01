@@ -1,6 +1,6 @@
 {
   "name": "xbmc",
-  "version": "0.4.3",
+  "version": "0.4.3.1",
   "description": "XBMC api",
   "main": "lib/index.js",
   "directories": {
