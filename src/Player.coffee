@@ -29,21 +29,27 @@ class Player
     debug 'playPause'
     @getActivePlayers (data) =>
       playerId = data.result?.playerid ? data.result[0]?.playerid ? data.player?.playerid
-      dfd = @api.send 'Player.PlayPause',
-        playerid: playerId
-      dfd.then (data) =>
-        pubsub.emit 'player.playpause', data
-        fn data if fn
+      unless playerId? 
+        fn null if fn
+      else
+        dfd = @api.send 'Player.PlayPause',
+          playerid: playerId
+        dfd.then (data) =>
+          pubsub.emit 'player.playpause', data
+          fn data if fn
 
   @stop: (fn = null) =>
     debug 'stop'
     @getActivePlayers (data) =>
       playerId = data.result?.playerid ? data.result[0]?.playerid ? data.player?.playerid
-      dfd = @api.send 'Player.Stop',
-        playerid: playerId
-      dfd.then (data) =>
-        pubsub.emit 'player.stop', data
-        fn data if fn
+      unless playerId? 
+        fn null if fn
+      else
+        dfd = @api.send 'Player.Stop',
+          playerid: playerId
+        dfd.then (data) =>
+          pubsub.emit 'player.stop', data
+          fn data if fn
 
   @forward = (fn = null) =>
     debug 'forward'
@@ -75,30 +81,36 @@ class Player
     debug 'next'
     @getActivePlayers (data) =>
       playerId = data.result?.playerid ? data.result[0]?.playerid ? data.player?.playerid
-      dfd = @api.send 'Player.GoTo',
-        playerid: playerId
-        to: 'next'
-      dfd.then (data) =>
-        pubsub.emit 'player.GoTo', data
-        fn data if fn
+      unless playerId? 
+        fn null if fn
+      else
+        dfd = @api.send 'Player.GoTo',
+          playerid: playerId
+          to: 'next'
+        dfd.then (data) =>
+          pubsub.emit 'player.GoTo', data
+          fn data if fn
 
   @previous: (fn = null) =>
     debug 'previous'
     @getActivePlayers (data) =>
       playerId = data.result?.playerid ? data.result[0]?.playerid ? data.player?.playerid
-      dfd = @api.send 'Player.GoTo',
-        playerid: playerId
-        to: 'previous'
-      dfd.then (data) =>
-        pubsub.emit 'player.GoTo', data
-        fn data if fn
+      unless playerId? 
+        fn null if fn
+      else
+        dfd = @api.send 'Player.GoTo',
+          playerid: playerId
+          to: 'previous'
+        dfd.then (data) =>
+          pubsub.emit 'player.GoTo', data
+          fn data if fn
 
   @getItem: (fn = null) =>
     debug 'GetItem'
     @getActivePlayers (data) =>
       #console.log data
       playerId = data.result?.playerid ? data.result[0]?.playerid ? data.player?.playerid
-      if not playerId? 
+      unless playerId? 
         fn null if fn
       else
         dfd = @api.send 'Player.GetItem',
