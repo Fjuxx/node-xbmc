@@ -103,7 +103,8 @@ class Connection
         stack[0][currentKey] = val
     @parser.onerror = (ex) =>
       #debug 'parser.onerror', ex, stack.length
-      throw new Error "JSON parse error: #{ex}"
+      #throw new Error "JSON parse error: #{ex}"
+      @onError "JSON parse error: #{ex}"
     @parser.onvalue = (val) =>
       #debug 'parser.onvalue', val, stack.length
       addValue(val)
