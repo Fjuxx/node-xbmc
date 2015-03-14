@@ -12,6 +12,8 @@ class Handlers
     debug 'players', data
     playerId = (data.result?[0] || data.player || {}).playerid
     if playerId
+      if playerId == -1
+        playerId = 1
       dfd = @api.send 'Player.GetItem', { playerid: playerId }
       dfd.then @playerItem
 
