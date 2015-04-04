@@ -19,7 +19,7 @@ class Handlers
 
   @playerItem: (data) =>
     debug 'playerItem', data
-    unless data.result.item.id
+    unless data.result?.item.id
       if data?.result? then param = data.result.item else param = null
       pubsub.emit 'api:video', param
     else
