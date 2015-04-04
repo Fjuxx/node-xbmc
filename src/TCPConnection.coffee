@@ -103,7 +103,7 @@ class Connection
       else
         stack[0][currentKey] = val
     @parser.onerror = (ex) =>
-      #debug 'parser.onerror', ex, stack.length
+      debug 'parser.onerror', ex, stack.length
       #throw new Error "JSON parse error: #{ex}"
       @onError "JSON parse error: #{ex}"
     @parser.onvalue = (val) =>
@@ -140,9 +140,9 @@ class Connection
     id = evt.data?.id
     dfd = @deferreds[id]
     delete @deferreds[id]
-    if evt.data.error
-      @onError evt
-      dfd.reject evt.data if dfd
+#    if evt.data.error
+#      @onError evt
+#      dfd.reject evt.data if dfd
     else
       @publish 'data', evt.data
       if evt.data.method?.indexOf '.On' > 1
