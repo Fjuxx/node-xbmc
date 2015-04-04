@@ -38,7 +38,8 @@ class Connection
 
   isActive: =>
     debug 'isActive'
-    return @socket?._connecting is false
+    return @socket?.writable
+    #return @socket?._connecting is false
 
   send: (data = null) =>
     debug 'send', JSON.stringify data
