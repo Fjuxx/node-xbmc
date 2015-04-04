@@ -43,7 +43,7 @@ class Connection
 
   send: (data = null) =>
     debug 'send', JSON.stringify data
-    throw new Error 'Connection: Unknown arguments' if not data
+    #throw new Error 'Connection: Unknown arguments' if not data
     data.id ?= do Connection.generateId
     dfd = @deferreds[data.id] ?= defer()
     unless @isActive()
@@ -143,10 +143,10 @@ class Connection
 #    if evt.data.error
 #      @onError evt
 #      dfd.reject evt.data if dfd
-    else
-      @publish 'data', evt.data
-      if evt.data.method?.indexOf '.On' > 1
-        @publish 'notification', evt.data
-      dfd.resolve evt.data if dfd
+#    else
+    @publish 'data', evt.data
+    if evt.data.method?.indexOf '.On' > 1
+      @publish 'notification', evt.data
+    dfd.resolve evt.data if dfd
 
 module.exports = Connection
