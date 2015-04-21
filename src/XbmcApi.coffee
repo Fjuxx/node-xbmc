@@ -21,7 +21,7 @@ class XbmcApi
 
   on: (evt, callback) ->
     debug 'on', evt
-    pubsub.on evt, callback
+    @pubsub.on evt, callback
 
   emit: (evt, data) ->
     debug 'emit', evt, data
