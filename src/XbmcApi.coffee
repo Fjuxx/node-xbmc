@@ -4,7 +4,7 @@ debug = require('debug') 'xbmc:XbmcApi'
 
 class XbmcApi
   constructor: (@options = {}) ->
-    pubsub = require './PubSub'
+    pubsub = require './pubsub'
     debug 'constructor'
     @queue = []
     @connection = null
@@ -12,10 +12,10 @@ class XbmcApi
 
     do @loadModules
 
-    pubsub.on 'connection:open', =>
+    @pubsub.on 'connection:open', =>
       unless @options.silent
         @message 'Attached to XBMC instance.'
-    pubsub.on 'connection:notification', @notifications.delegate
+    @pubsub.on 'connection:notification', @notifications.delegate
 
     @setConnection @options.connection if @options.connection?
 
@@ -25,7 +25,7 @@ class XbmcApi
 
   emit: (evt, data) ->
     debug 'emit', evt, data
-    pubsub.emit evt, data
+    @pubsub.emit evt, data
 
   loadModules: =>
     debug 'loadModules'
