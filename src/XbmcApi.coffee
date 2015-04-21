@@ -1,9 +1,10 @@
 {defer} = require 'node-promise'
 debug = require('debug') 'xbmc:XbmcApi'
-pubsub = require './PubSub'
+
 
 class XbmcApi
   constructor: (@options = {}) ->
+    pubsub = require './PubSub'
     debug 'constructor'
     @queue = []
     @connection = null
