@@ -1,4 +1,4 @@
-pubsub = require './PubSub'
+#pubsub = require './PubSub'
 debug = require('debug') 'xbmc:Handlers'
 
 class Handlers
@@ -21,7 +21,7 @@ class Handlers
     debug 'playerItem', data
     unless data.result?.item.id
       if data?.result? then param = data.result.item else param = null
-      pubsub.emit 'api:video', param
+      @api.pubsub.emit 'api:video', param
     else
       data = data.result.item
       fn = @api.media[data.type]

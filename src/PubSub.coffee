@@ -6,6 +6,6 @@ class PubSub extends EventEmitter
     debug 'constructor'
     super
 
-pubsub = new PubSub()
+#pubsub = new PubSub()
 
-module.exports = pubsub
+module.exports = PubSub

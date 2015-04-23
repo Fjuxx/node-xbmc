@@ -1,4 +1,4 @@
-pubsub = require './PubSub'
+#pubsub = require './PubSub'
 debug = require('debug') 'xbmc:Player'
 
 class Player
@@ -15,14 +15,14 @@ class Player
       item:    item
       options: options
     dfd.then (data) =>
-      pubsub.emit 'player.open', data
+      @api.pubsub.emit 'player.open', data
       fn data if fn
 
   @getActivePlayers: (fn = null) =>
     debug 'getActivePlayers'
     dfd = @api.send 'Player.GetActivePlayers'
     dfd.then (data) =>
-      pubsub.emit 'player.activePlayers', data
+      @api.pubsub.emit 'player.activePlayers', data
       fn data if fn
 
   @playPause: (fn = null) =>
@@ -35,7 +35,7 @@ class Player
         dfd = @api.send 'Player.PlayPause',
           playerid: playerId
         dfd.then (data) =>
-          pubsub.emit 'player.playpause', data
+          @api.pubsub.emit 'player.playpause', data
           fn data if fn
 
   @stop: (fn = null) =>
@@ -48,7 +48,7 @@ class Player
         dfd = @api.send 'Player.Stop',
           playerid: playerId
         dfd.then (data) =>
-          pubsub.emit 'player.stop', data
+          @api.pubsub.emit 'player.stop', data
           fn data if fn
 
   @forward = (fn = null) =>
@@ -64,7 +64,7 @@ class Player
         playerid: playerId
         speed:    speed
       dfd.then (data) =>
-        pubsub.emit 'player.setspeed', data
+        @api.pubsub.emit 'player.setspeed', data
         fn data if fn
 
   @openYoutube: (id, options = {}, fn = null) =>
@@ -88,7 +88,7 @@ class Player
           playerid: playerId
           to: 'next'
         dfd.then (data) =>
-          pubsub.emit 'player.GoTo', data
+          @api.pubsub.emit 'player.GoTo', data
           fn data if fn
 
   @previous: (fn = null) =>
@@ -102,7 +102,7 @@ class Player
           playerid: playerId
           to: 'previous'
         dfd.then (data) =>
-          pubsub.emit 'player.GoTo', data
+          @api.pubsub.emit 'player.GoTo', data
           fn data if fn
 
   @getItem: (fn = null) =>
@@ -117,7 +117,7 @@ class Player
           playerid: playerId
           properties: ['title','artist']
         dfd.then (data) =>
-          pubsub.emit 'player.GetItem', data
+          @api.pubsub.emit 'player.GetItem', data
           fn data if fn
   @getCurrentlyPlaying: (fn = null) =>
     debug 'getCurrentlyPlaying'

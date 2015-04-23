@@ -1,5 +1,5 @@
 debug = require('debug') 'xbmc:TCPConnection'
-pubsub = require './PubSub'
+Pubsub = require './PubSub'
 
 {defer} = require 'node-promise'
 clarinet = require 'clarinet'
@@ -14,6 +14,8 @@ class Connection
     @options.password   ?= false
     @options.verbose    ?= false
     @options.connectNow ?= true
+
+    @pubsub = new Pubsub()
 
     do @_createParser
 
@@ -35,6 +37,14 @@ class Connection
 
   @_id: 0
   @generateId: -> "__id#{++Connection._id}"
+
+  on: (evt, callback) ->
+    debug 'on', evt
+    @pubsub.on evt, callback
+
+  emit: (evt, data) ->
+    debug 'emit', evt, data
+    @pubsub.emit evt, data
 
   isActive: =>
     debug 'isActive'
@@ -69,7 +79,7 @@ class Connection
     #data.connection = @
     dataVerbose = if typeof(data) is 'object' then JSON.stringify data else data
     debug 'publish', topic, dataVerbose
-    pubsub.emit "connection:#{topic}", data
+    @pubsub.emit "connection:#{topic}", data
 
   onOpen: =>
     debug 'onOpen'

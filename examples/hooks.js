@@ -14,9 +14,9 @@
     verbose: false
   });
 
-  xbmcApi = new XbmcApi;
-
-  xbmcApi.setConnection(connection);
+  xbmcApi = new XbmcApi({
+    connection: connection
+  });
 
   xbmcApi.on('connection:data', function() {
     return console.log('onData');

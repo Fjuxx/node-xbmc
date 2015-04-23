@@ -1,27 +1,24 @@
 {defer} = require 'node-promise'
 debug = require('debug') 'xbmc:XbmcApi'
-
+Pubsub = require './PubSub'
 
 class XbmcApi
   constructor: (@options = {}) ->
-    pubsub = require './pubsub'
     debug 'constructor'
     @queue = []
     @connection = null
-    @pubsub = pubsub
+    @pubsub = new Pubsub()
 
     do @loadModules
-
-    @pubsub.on 'connection:open', =>
-      unless @options.silent
-        @message 'Attached to XBMC instance.'
-    @pubsub.on 'connection:notification', @notifications.delegate
 
     @setConnection @options.connection if @options.connection?
 
   on: (evt, callback) ->
     debug 'on', evt
-    @pubsub.on evt, callback
+    if evt.slice(0,10) == 'connection'
+      @connection.on evt, callback
+    else 
+      @pubsub.on evt, callback
 
   emit: (evt, data) ->
     debug 'emit', evt, data
@@ -41,6 +38,12 @@ class XbmcApi
     debug 'setConnection'
     @connection.close() if @connection
     @connection = newConnection
+
+    @on 'connection:open', =>
+      unless @options.silent
+        @message 'Attached to XBMC instance.'
+    @on 'connection:notification', @notifications.delegate
+
     @queue.forEach (item) -> @send item.method, item.params, item.dfd
     @queue = []
     do @initialize

@@ -12,8 +12,8 @@ connection = new TCPConnection
   port:    config.connection.port
   verbose: false
 xbmcApi = new XbmcApi
-
-xbmcApi.setConnection connection
+  connection: connection
+#xbmcApi.setConnection connection
 
 xbmcApi.on 'connection:data',                     -> console.log 'onData'
 xbmcApi.on 'connection:open',                     -> console.log 'onOpen'

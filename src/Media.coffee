@@ -1,4 +1,4 @@
-pubsub = require './PubSub'
+#pubsub = require './PubSub'
 debug = require('debug') 'xbmc:Media'
 
 class Media
@@ -11,7 +11,7 @@ class Media
 
   @_result: (data, field, evt, fn) =>
     d = @api.scrub data.result[field]
-    pubsub.emit 'api:' + evt, d
+    @api.pubsub.emit 'api:' + evt, d
     fn d if fn
     d
 
